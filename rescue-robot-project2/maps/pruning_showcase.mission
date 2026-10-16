@@ -1,0 +1,11 @@
+name: Pruning Showcase
+battery: 44
+max_turns: 32
+wind: W
+description: A compact field test where minimax and alpha-beta choose the same rescue plan, but alpha-beta searches fewer successors.
+##########
+#B..r..F.#
+#.##.##..#
+#R..S.r..#
+#...##...#
+##########

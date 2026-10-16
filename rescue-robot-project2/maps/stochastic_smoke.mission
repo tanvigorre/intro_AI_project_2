@@ -1,0 +1,11 @@
+name: Stochastic Smoke
+battery: 42
+max_turns: 32
+wind: W
+description: Smoke movement is uncertain, making this layout useful for expectimax.
+##########
+#B....g..#
+#..##.gF.#
+#R.S..S..#
+#..mw....#
+##########

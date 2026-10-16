@@ -1,0 +1,11 @@
+name: Evaluation Gauntlet
+battery: 52
+max_turns: 40
+wind: W
+description: A larger field test for the evaluation function with two survivor markers and two physically propagating hazards.
+############
+#B..c...r.F#
+#.#.###.#..#
+#R.S..g..S.#
+#..mr.C..w.#
+############

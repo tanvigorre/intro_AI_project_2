@@ -1,0 +1,10 @@
+name: Training Corner
+battery: 28
+max_turns: 22
+wind: W
+description: A small warm-up site with one survivor marker and a distant smoke front.
+########
+#B....F#
+#..#...#
+#R.S...#
+########

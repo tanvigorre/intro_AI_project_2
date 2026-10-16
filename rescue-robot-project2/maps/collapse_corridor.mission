@@ -1,0 +1,11 @@
+name: Collapse Corridor
+battery: 44
+max_turns: 32
+wind: W
+description: A secondary-collapse wavefront propagates along the upper corridor and can cut off the return route.
+##########
+#B..r...C#
+#.##.##..#
+#R..S.r..#
+#...##...#
+##########

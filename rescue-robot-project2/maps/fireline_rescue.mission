@@ -1,0 +1,11 @@
+name: Fireline Rescue
+battery: 42
+max_turns: 30
+wind: W
+description: Wind-driven smoke presses along the north corridor while RescueBot works from the south.
+##########
+#B...r..F#
+#.###.####
+#R..S....#
+#..m....w#
+##########

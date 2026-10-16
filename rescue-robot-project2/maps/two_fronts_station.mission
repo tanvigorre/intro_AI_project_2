@@ -1,0 +1,11 @@
+name: Two Fronts Station
+battery: 46
+max_turns: 38
+wind: W
+description: A charging pad helps RescueBot manage a wind-driven fire front and a secondary-collapse wavefront.
+###########
+#B..c....F#
+#.#.###.#.#
+#R.S...S..#
+#..m.C.rw.#
+###########
