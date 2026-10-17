@@ -2,6 +2,7 @@ from __future__ import annotations
 import math
 
 import evaluation
+from evaluation import manhattan_distance
 from rescue_core.actions import ACTION_ORDER
 
 
@@ -21,7 +22,7 @@ class Agent:
 # Include one sentence explaining the Q1 reflex-agent concept in your own words.
 #
 # YOUR RESPONSE:
-# Write your response here.
+# I did not use generative AI or a coding-assistant for this assignemnt as well as any online resources outside of allowed resources. I checked my answer using the autograder command (autograder.py -q q1), since it was able to provide useful information to help me identify how to interact with the data structures within each positions for the successors. I ran the manhattan distance function from evaluation so I could identify how far the agent was to pertinent landmarks within the game. The concept for the function was fairly simple in that the agent tries to seek out survivors and if there aren't any it will return to base. We also account for proximity to hazards and use this to reduce scores and subsequently add back battery for the player to make its next move.
 # === END Q1 SELF-REFLECTION ===
 
 class ReflexRescueAgent(Agent):
@@ -53,19 +54,25 @@ class ReflexRescueAgent(Agent):
         hazards = successor.get_hazard_positions()
         base = successor.get_base_position()
         
+        distance_list = []
+        
         if surviving:
-            survivor_distances = [abs(new_position.row - survivor.row)
-            + abs(new_position.col - survivor.col)
-            for survivor in surviving
-            ]
-            score -= 2.0 * min(survivor_distances)
+            for survivor in surviving:
+                #survivor_distances = abs(new_position.row - survivor.row) + abs(new_position.col - survivor.col)
+                survivor_distances = manhattan_distance(new_position,survivor)
+                distance_list.append(survivor_distances)
+            
+            survivor_distance = min(distance_list)
+            score -= 2.0 * survivor_distances
 
         else:
-            base_distance = abs(new_position.row - base.row) + abs(new_position.col - base.col)
+            #base_distance = abs(new_position.row - base.row) + abs(new_position.col - base.col)
+            base_distance = manhattan_distance(new_position,base)
             score -= 2.0 * base_distance
 
         for hazard in hazards:
-            distance = abs(new_position.row - hazard.row) + abs(new_position.col - hazard.col)
+            #distance = abs(new_position.row - hazard.row) + abs(new_position.col - hazard.col)
+            distance = manhattan_distance(new_position,hazard)
 
             if distance == 0:
                 score -= 100
@@ -106,7 +113,7 @@ class MultiAgentSearchAgent(Agent):
 # Include one sentence explaining the Q2 minimax concept in your own words.
 #
 # YOUR RESPONSE:
-# Write your response here.
+# I did not use generative AI or a coding-assistant for this assignemnt as well as any online resources outside of allowed resources (particularly for the , _ statement since I realized I only really needed the value from each time I recursively ran through the function). I checked my answer using the autograder (autograder.py -q q2) for question 2 as well as lecture notes on minimax which were very fruitful for figuring out the intial values for the min and max agents (sometimes I get them mixed up). For this function, I leveraged the evaluation function from question 1 so when the robot was done with its moves so it can be scored accordingly. As for how this process works, in essence you have the robot use the max agent while the rest use the min agent, which means we assume that the hazards will choose worse than the robot. 
 # === END Q2 SELF-REFLECTION ===
 
 class MinimaxAgent(MultiAgentSearchAgent):
@@ -119,24 +126,27 @@ class MinimaxAgent(MultiAgentSearchAgent):
 
     def get_action(self, game_state):
     
-    
-        def minimax(state, depth, agent_index):
+        def minimax(robot, depth, agent_index):
             if depth >= self.depth:
-                return self.evaluation_function(state), None
+                return self.evaluation_function(robot), None
             
-            legal = state.get_legal_actions(agent_index)
+            legal = robot.get_legal_actions(agent_index)
             if not legal:
-                return self.evaluation_function(state), None
+                return self.evaluation_function(robot), None
             
-            next_agent = (agent_index + 1) % state.get_num_agents()
-            next_depth = depth + 1 if next_agent == 0 else depth
+            next_agent = (agent_index + 1) 
+            if next_agent == robot.get_num_agents():
+                next_agent = 0
+                next_depth = depth + 1
+            else:
+                next_depth = depth
 
             if agent_index == 0:
                 best_value = -math.inf
                 best_action = None
 
                 for action in legal:
-                    successor = state.generate_successor(agent_index, action)
+                    successor = robot.generate_successor(agent_index, action)
                     value, _ = minimax(successor, next_depth, next_agent)
 
                     if value > best_value:
@@ -149,17 +159,16 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 best_value = math.inf
 
                 for action in legal:
-                    successor = state.generate_successor(agent_index, action)
+                    successor = robot.generate_successor(agent_index, action)
                     value, _ = minimax(successor, next_depth, next_agent)
 
                     if value < best_value:
                         best_value = value
 
                 return best_value, None
+            
         value, action = minimax(game_state, 0, 0)
         return action if action is not None else "Stop"
-        
-        
 
 
 # === Q3 SELF-REFLECTION (1 point) ===
@@ -200,7 +209,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 # Include one sentence explaining the Q4 expectimax concept in your own words.
 #
 # YOUR RESPONSE:
-# Write your response here.
+# I did not use GenAI, AI tools, coding assistants, posted solutions, or online resources that solve this project. I checked my answer using the expectimax lecture as well as the autograder (autograder.py -q q4) which helped me realize that I needed to re-initialize next_agent to zero so we can continue to loop through the function. With this question, it has a very similar premise to the minimax, only difference being it takes the average of the options and sees how its value compares. While the robot will have the max agent, the hazards will pick randomly in a sense. As for functions used, I had to use the generate_successor function to check for the next step so then we could identify which action would be selected.
 # === END Q4 SELF-REFLECTION ===
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -211,5 +220,61 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
     """
 
     def get_action(self, game_state):
-        # TODO: Question 4
-        raise NotImplementedError
+        num_agents = game_state.get_num_agents()
+
+        def expectimax(robot, depth, agent_index):
+            if depth == self.depth or robot.is_win() or robot.is_loss():
+                return self.evaluation_function(robot)
+
+            actions = robot.get_legal_actions(agent_index)
+
+            if not actions:
+                return self.evaluation_function(robot)
+
+            next_agent = (agent_index + 1) 
+            if next_agent == robot.get_num_agents():
+                next_agent = 0
+                next_depth = depth + 1
+            else:
+                next_depth = depth
+
+            if agent_index == 0:
+                best_value = -math.inf
+
+                for action in actions:
+                    successor = robot.generate_successor(agent_index, action)
+                    value = expectimax(successor, next_depth, next_agent)
+                    best_value = max(best_value, value)
+
+                return best_value
+
+            total_value = 0
+
+            for action in actions:
+                successor = robot.generate_successor(agent_index, action)
+                value = expectimax(successor, next_depth, next_agent)
+                total_value += value
+
+            return total_value / len(actions)
+
+        
+        actions = game_state.get_legal_actions(0)
+
+        if not actions:
+            return None
+
+        best_action = None
+        best_value = -math.inf
+
+        for action in actions:
+            successor = game_state.generate_successor(0, action)
+            value = expectimax(successor, 0 if num_agents == 1 else 0, 1 if num_agents > 1 else 0)
+
+            if num_agents == 1:
+                value = expectimax(successor, 1, 0)
+
+            if value > best_value:
+                best_value = value
+                best_action = action
+
+        return best_action
