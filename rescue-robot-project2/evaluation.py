@@ -75,3 +75,5 @@ def better_evaluation_function(current_game_state):
     score -= 0.1 * turns
 
     return score
+    
+ 
