@@ -52,21 +52,20 @@ class ReflexRescueAgent(Agent):
         surviving = successor.get_survivor_positions()
         hazards = successor.get_hazard_positions()
         base = successor.get_base_position()
-        print(new_position)
-        print(surviving)
-        print(hazards)
-        print(base)
         
         if surviving:
-            survivor_distance = [abs(new_position.row - surviving.row) + abs(new_position.col - surviving.col)]
-            score -= 2.0 * min(survivor_distance)
+            survivor_distances = [abs(new_position.row - survivor.row)
+            + abs(new_position.col - survivor.col)
+            for survivor in surviving
+            ]
+            score -= 2.0 * min(survivor_distances)
 
         else:
-            base_distance = [abs(new_position.row - base.row) + abs(new_position.col - base.col)]
+            base_distance = abs(new_position.row - base.row) + abs(new_position.col - base.col)
             score -= 2.0 * base_distance
 
         for hazard in hazards:
-            distance = [abs(new_position.row - hazard.row) + abs(new_position.col - hazard.col)]
+            distance = abs(new_position.row - hazard.row) + abs(new_position.col - hazard.col)
 
             if distance == 0:
                 score -= 100
@@ -119,40 +118,48 @@ class MinimaxAgent(MultiAgentSearchAgent):
     """
 
     def get_action(self, game_state):
+    
+    
         def minimax(state, depth, agent_index):
-            # Base case:
-            # If terminal or at the depth limit
-            # return (evaluation_function(state), None)
-
-            # Get legal actions for agent_index
-            # If empty, return (evaluation_function(state), None)
-
-            # next_agent = (agent_index + 1) % state.get_num_agents()
-            # next_depth = depth + 1 if next_agent == 0 else depth
+            if depth >= self.depth:
+                return self.evaluation_function(state), None
+            
+            legal = state.get_legal_actions(agent_index)
+            if not legal:
+                return self.evaluation_function(state), None
+            
+            next_agent = (agent_index + 1) % state.get_num_agents()
+            next_depth = depth + 1 if next_agent == 0 else depth
 
             if agent_index == 0:
-                # Initialize best_value to -infinity.
-                # For every legal action:
-                #   generate the successor
-                #   recursively evaluate it with next_depth and next_agent
-                #   if its value is greater than best_value,
-                #       update best_value and best_action
-                # Return (best_value, best_action)
-                pass
+                best_value = -math.inf
+                best_action = None
+
+                for action in legal:
+                    successor = state.generate_successor(agent_index, action)
+                    value, _ = minimax(successor, next_depth, next_agent)
+
+                    if value > best_value:
+                        best_value = value
+                        best_action = action
+
+                return best_value, best_action
 
             else:
-                # Initialize best_value to + infinity
-                # For every legal action:
-                #   generate the successor
-                #   recursively evaluate it with next_depth and next_agent
-                #   keep the smallest value
-                # Return (best_value, None)
-                pass
+                best_value = math.inf
 
-        # Call minimax(game_state, 0, 0).
-        # Return the selected action, or "Stop" if there isn't one.
+                for action in legal:
+                    successor = state.generate_successor(agent_index, action)
+                    value, _ = minimax(successor, next_depth, next_agent)
+
+                    if value < best_value:
+                        best_value = value
+
+                return best_value, None
+        value, action = minimax(game_state, 0, 0)
+        return action if action is not None else "Stop"
         
-        raise NotImplementedError
+        
 
 
 # === Q3 SELF-REFLECTION (1 point) ===
