@@ -182,7 +182,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
 # Include one sentence explaining the Q3 alpha-beta concept in your own words.
 #
 # YOUR RESPONSE:
-# Write your response here.
+# I did not use GenAI, AI tools, coding assistants, posted solutions, or online resources that solve this problem. I checked my answer using the course materials, specifically the lecture slides on aplha-beta pruning. The pseduo-code provided in the slides was extremely helpful for implementing Q3, especially in thinking about the parameters needed for the alphabeta function. For this question, I followed the code structure from the minimax agent, but just extended it so the remianing leaves of a node would be skipped when beta becomes less than or equal to alpha.
 # === END Q3 SELF-REFLECTION ===
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
@@ -195,7 +195,53 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
     def get_action(self, game_state):
         # TODO: Question 3
-        raise NotImplementedError
+        def alphabeta(state, depth, agent_index, alpha, beta):
+            if depth >= self.depth:
+                return self.evaluation_function(state), None
+        
+            legal = state.get_legal_actions(agent_index)
+            if not legal:
+                return self.evaluation_function(state), None
+        
+            next_agent = (agent_index + 1) % state.get_num_agents()
+            next_depth = depth + 1 if next_agent == 0 else depth
+        
+            if agent_index == 0:
+                best_value = -math.inf
+                best_action = None
+        
+                for action in legal:
+                    successor = state.generate_successor(agent_index, action)
+                    value, _ = alphabeta(successor, next_depth, next_agent, alpha, beta)
+            
+                    if value > best_value:
+                        best_value = value
+                        best_action = action
+            
+                    alpha = max(alpha, best_value)
+                    if beta <= alpha:
+                        break
+            
+                return best_value, best_action
+        
+            else:
+                best_value = math.inf
+        
+                for action in legal:
+                    successor = state.generate_successor(agent_index, action)
+                    value, _ = alphabeta(successor, next_depth, next_agent, alpha, beta)
+        
+                    if value < best_value:
+                        best_value = value
+        
+                    beta = min(beta, best_value)
+                    if beta <= alpha:
+                        break
+        
+                return best_value, None
+        
+        value, action = alphabeta(game_state, 0, 0, -math.inf, math.inf)
+        return action if action is not None else "Stop"
 
 
 # === Q4 SELF-REFLECTION (1 point) ===
