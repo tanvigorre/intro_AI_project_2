@@ -1,55 +1,48 @@
 {
-  "score": 0.0,
-  "max_score": 5.0,
+  "score": 2.5,
+  "max_score": 6.0,
   "tests": [
     {
-      "name": "Q1.1 Reflex prefers survivor progress",
-      "score": 0.0,
+      "name": "Q5.1 Provided score evaluation remains state score",
+      "score": 0.5,
       "max_score": 0.5,
-      "status": "failed",
-      "output": "Expected behavior: Moving East toward the survivor on training_corner should score above Stop.\nLikely place to check: Check ReflexRescueAgent.evaluation_function in agents.py; score immediate successors, survivor distance, and Stop penalties.\n\nAttributeError: 'tuple' object has no attribute 'row'\nTraceback (most recent call last):\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 547, in reflex_rescue_move_scores_higher\n    east_score = agent.evaluation_function(state, \"East\")\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 61, in evaluation_function\n    survivor_distance = [abs(new_position.row - surviving.row) + abs(new_position.col - surviving.col)]\n                                                ^^^^^^^^^^^^^\nAttributeError: 'tuple' object has no attribute 'row'\n"
+      "status": "passed",
+      "output": "Provided score_evaluation_function still returned the game score."
     },
     {
-      "name": "Q1.2 Reflex avoids nearby hazards",
-      "score": 0.0,
-      "max_score": 0.5,
-      "status": "failed",
-      "output": "Expected behavior: A safe nonfatal action should score above ending next to an active hazard.\nLikely place to check: Check hazard-distance features in ReflexRescueAgent.evaluation_function, not only loss states.\n\nAttributeError: 'tuple' object has no attribute 'row'\nTraceback (most recent call last):\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 559, in reflex_avoids_nearby_hazard\n    next_to_hazard = agent.evaluation_function(state, \"East\")\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 61, in evaluation_function\n    survivor_distance = [abs(new_position.row - surviving.row) + abs(new_position.col - surviving.col)]\n                                                ^^^^^^^^^^^^^\nAttributeError: 'tuple' object has no attribute 'row'\n"
-    },
-    {
-      "name": "Q1.3 Reflex prioritizes survivor route",
-      "score": 0.0,
-      "max_score": 0.75,
-      "status": "failed",
-      "output": "Expected behavior: A move toward the survivor route should score above a small charging-pad detour.\nLikely place to check: Check survivor-distance and rescue-priority features in the reflex evaluation.\n\nAttributeError: 'tuple' object has no attribute 'row'\nTraceback (most recent call last):\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 574, in reflex_prioritizes_survivor_route\n    toward_survivor = agent.evaluation_function(state, \"South\")\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 61, in evaluation_function\n    survivor_distance = [abs(new_position.row - surviving.row) + abs(new_position.col - surviving.col)]\n                                                ^^^^^^^^^^^^^\nAttributeError: 'tuple' object has no attribute 'row'\n"
-    },
-    {
-      "name": "Q1.4 Reflex values returning to base",
-      "score": 0.0,
-      "max_score": 0.75,
-      "status": "failed",
-      "output": "Expected behavior: After all survivors are secured, moving toward triage base should score higher than moving away.\nLikely place to check: Check get_base_position() and the no-survivors branch of ReflexRescueAgent.evaluation_function.\n\nTypeError: can't multiply sequence by non-int of type 'float'\nTraceback (most recent call last):\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 589, in reflex_values_return_base\n    toward_base = agent.evaluation_function(state, \"West\")\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 66, in evaluation_function\n    score -= 2.0 * base_distance\n             ~~~~^~~~~~~~~~~~~~~\nTypeError: can't multiply sequence by non-int of type 'float'\n"
-    },
-    {
-      "name": "Q1.5 Reflex secures adjacent survivor on evaluation_gauntlet",
-      "score": 0.0,
-      "max_score": 0.75,
-      "status": "failed",
-      "output": "Expected behavior: When a survivor marker is adjacent on evaluation_gauntlet, stepping onto it should score above waiting.\nLikely place to check: Check that ReflexRescueAgent.evaluation_function rewards secured survivors even when another survivor remains farther away.\n\nAttributeError: 'tuple' object has no attribute 'row'\nTraceback (most recent call last):\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 606, in reflex_secures_adjacent_survivor_on_evaluation_gauntlet\n    rescue_now = agent.evaluation_function(state, \"East\")\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 61, in evaluation_function\n    survivor_distance = [abs(new_position.row - surviving.row) + abs(new_position.col - surviving.col)]\n                                                ^^^^^^^^^^^^^\nAttributeError: 'tuple' object has no attribute 'row'\n"
-    },
-    {
-      "name": "Q1.6 Reflex returns a legal action",
-      "score": 0.0,
-      "max_score": 0.75,
-      "status": "failed",
-      "output": "Expected behavior: The reflex agent should return one legal RescueBot action and should not Stop at the opening of training_corner.\nLikely place to check: Check get_action in ReflexRescueAgent and make sure evaluation_function returns comparable numbers.\n\nAttributeError: 'tuple' object has no attribute 'row'\nTraceback (most recent call last):\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/autograder.py\", line 617, in reflex_get_action_legal\n    action = ReflexRescueAgent().get_action(state)\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 34, in get_action\n    scores = [(self.evaluation_function(game_state, action), action) for action in legal]\n               ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tanvigorre/Downloads/rescue-robot-project2/agents.py\", line 61, in evaluation_function\n    survivor_distance = [abs(new_position.row - surviving.row) + abs(new_position.col - surviving.col)]\n                                                ^^^^^^^^^^^^^\nAttributeError: 'tuple' object has no attribute 'row'\n"
-    },
-    {
-      "name": "Q1.R Self-reflection for Q1",
+      "name": "Q5.2 Better evaluation prefers equal-score rescue progress",
       "score": 0.0,
       "max_score": 1.0,
       "status": "failed",
-      "output": "Expected behavior:\nComplete the plain-comment self-reflection block for Q1.\n\nWhere to complete it:\nagents.py, inside the block labeled:\n=== Q1 SELF-REFLECTION (1 point) ===\n\nWhat to write:\nWrite 3-5 sentences, at least 25 words total. This is a no-GenAI/coding-assistant assignment.\nExplicitly state that you did not use GenAI, AI tools, coding assistants, or autocomplete assistants for Q1.\nAlso explicitly state that you did not use posted solutions, solution repositories, tutorial code, forum answers, online code-help resources, or other resources that directly solve this project.\nSay how you checked your answer using the provided project files, local commands, lecture material, or course resources.\nAlso include one sentence about the concept you worked on in your own words.\nPlain-language concept wording is fine, such as minimax assumes the worst plausible hazard response, alpha-beta skips branches that cannot change the choice, or expectimax averages random hazard outcomes.\nInclude at least one concrete project detail, such as a function name, file name, map name, test id, or command.\n\nIssue found:\nThe response is too short to count as a complete reflection. It has 4 words; expected at least 25.\n\nFound:\nWrite your response here.\n\nConcrete detail examples:\nExpectimaxAgent, better_evaluation_function, stochastic_smoke, Planning successor calls, autograder.py -q q1\n\nExample:\n# I did not use GenAI, AI tools, coding assistants, posted solutions, or online project-solving resources for Q1.\n# I worked from the lecture notes and the provided RescueBot files.\n# I checked my answer by running python3.13 autograder.py -q q1 and testing stochastic_smoke in rescue.py.\n# This question helped me explain the search backup rule in my own words."
+      "output": "Expected behavior: With equal raw score, better_evaluation_function should prefer a state that has secured a survivor.\nLikely place to check: Check survivor count and rescue-progress features in evaluation.py, not only get_score().\n\nAssertionError: With equal raw score, a state that has secured a survivor should rank higher; start=-2.1999999999999997, rescued=-8.6.\nTraceback (most recent call last):\n  File \"/Users/gaylehenderson/intro_AI_project_2/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/gaylehenderson/intro_AI_project_2/rescue-robot-project2/autograder.py\", line 870, in better_eval_prefers_rescued_state\n    assert rescue_value > start_value, (\nAssertionError: With equal raw score, a state that has secured a survivor should rank higher; start=-2.1999999999999997, rescued=-8.6.\n"
+    },
+    {
+      "name": "Q5.3 Better evaluation uses survivor distance beyond score",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "passed",
+      "output": "better_evaluation_function uses state features beyond get_score()."
+    },
+    {
+      "name": "Q5.4 Better evaluation penalizes nearby hazards",
+      "score": 1.0,
+      "max_score": 1.0,
+      "status": "passed",
+      "output": "better_evaluation_function penalizes operating next to hazards."
+    },
+    {
+      "name": "Q5.5 Better evaluation guides harder stochastic rescues",
+      "score": 0.0,
+      "max_score": 1.5,
+      "status": "failed",
+      "output": "Expected behavior: Expectimax with better_evaluation_function should win most harder random-hazard episodes and maintain a reasonable average score.\nLikely place to check: Check survivor distance, return-to-base, hazard distance, turn pressure, and terrain-cost features.\n\nAssertionError: better_evaluation_function should guide robust play on harder stochastic maps. Expected at least 7 wins out of 10 and average score >= -150; got wins=3, average=-299.6. Details: two_fronts_station/seed2:L:-478.0, two_fronts_station/seed3:W:141.0, two_fronts_station/seed5:W:122.0, two_fronts_station/seed15:L:-508.0, two_fronts_station/seed18:W:141.0, evaluation_gauntlet/seed2:L:-483.0, evaluation_gauntlet/seed4:L:-483.0, evaluation_gauntlet/seed5:L:-483.0, evaluation_gauntlet/seed15:L:-482.0, evaluation_gauntlet/seed20:L:-483.0\nTraceback (most recent call last):\n  File \"/Users/gaylehenderson/intro_AI_project_2/rescue-robot-project2/autograder.py\", line 453, in run_case\n    output = case[\"fn\"]()\n  File \"/Users/gaylehenderson/intro_AI_project_2/rescue-robot-project2/autograder.py\", line 925, in better_eval_guides_random_field_tests\n    assert wins >= 7 and average_score >= -150, (\nAssertionError: better_evaluation_function should guide robust play on harder stochastic maps. Expected at least 7 wins out of 10 and average score >= -150; got wins=3, average=-299.6. Details: two_fronts_station/seed2:L:-478.0, two_fronts_station/seed3:W:141.0, two_fronts_station/seed5:W:122.0, two_fronts_station/seed15:L:-508.0, two_fronts_station/seed18:W:141.0, evaluation_gauntlet/seed2:L:-483.0, evaluation_gauntlet/seed4:L:-483.0, evaluation_gauntlet/seed5:L:-483.0, evaluation_gauntlet/seed15:L:-482.0, evaluation_gauntlet/seed20:L:-483.0\n"
+    },
+    {
+      "name": "Q5.R Self-reflection for Q5",
+      "score": 0.0,
+      "max_score": 1.0,
+      "status": "failed",
+      "output": "Expected behavior:\nComplete the plain-comment self-reflection block for Q5.\n\nWhere to complete it:\nevaluation.py, inside the block labeled:\n=== Q5 SELF-REFLECTION (1 point) ===\n\nWhat to write:\nWrite 3-5 sentences, at least 25 words total. This is a no-GenAI/coding-assistant assignment.\nExplicitly state that you did not use GenAI, AI tools, coding assistants, or autocomplete assistants for Q5.\nAlso explicitly state that you did not use posted solutions, solution repositories, tutorial code, forum answers, online code-help resources, or other resources that directly solve this project.\nSay how you checked your answer using the provided project files, local commands, lecture material, or course resources.\nAlso include one sentence about the concept you worked on in your own words.\nPlain-language concept wording is fine, such as minimax assumes the worst plausible hazard response, alpha-beta skips branches that cannot change the choice, or expectimax averages random hazard outcomes.\nInclude at least one concrete project detail, such as a function name, file name, map name, test id, or command.\n\nIssue found:\nThe response is too short to count as a complete reflection. It has 4 words; expected at least 25.\n\nFound:\nWrite your response here.\n\nConcrete detail examples:\nExpectimaxAgent, better_evaluation_function, stochastic_smoke, Planning successor calls, autograder.py -q q5\n\nExample:\n# I did not use GenAI, AI tools, coding assistants, posted solutions, or online project-solving resources for Q5.\n# I worked from the lecture notes and the provided RescueBot files.\n# I checked my answer by running python3.13 autograder.py -q q5 and testing stochastic_smoke in rescue.py.\n# This question helped me explain the search backup rule in my own words."
     }
   ],
   "stdout_visibility": "visible"

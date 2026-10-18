@@ -22,7 +22,7 @@ class Agent:
 # Include one sentence explaining the Q1 reflex-agent concept in your own words.
 #
 # YOUR RESPONSE:
-# I did not use generative AI or a coding-assistant for this assignemnt as well as any online resources outside of allowed resources. I checked my answer using the autograder command (autograder.py -q q1), since it was able to provide useful information to help me identify how to interact with the data structures within each positions for the successors. I ran the manhattan distance function from evaluation so I could identify how far the agent was to pertinent landmarks within the game. The concept for the function was fairly simple in that the agent tries to seek out survivors and if there aren't any it will return to base. We also account for proximity to hazards and use this to reduce scores and subsequently add back battery for the player to make its next move.
+# I did not use generative AI, posted solutions, AI tools, online resources or a coding-assistant for this assignemnt as well as any online resources outside of allowed resources. I checked my answer using the autograder command (autograder.py -q q1), since it was able to provide useful information to help me identify how to interact with the data structures within each positions for the successors. I ran the manhattan distance function from evaluation so I could identify how far the agent was to pertinent landmarks within the game. The concept for the function was fairly simple in that the agent tries to seek out survivors and if there aren't any it will return to base. We also account for proximity to hazards and use this to reduce scores and subsequently add back battery for the player to make its next move.
 # === END Q1 SELF-REFLECTION ===
 
 class ReflexRescueAgent(Agent):
@@ -113,7 +113,7 @@ class MultiAgentSearchAgent(Agent):
 # Include one sentence explaining the Q2 minimax concept in your own words.
 #
 # YOUR RESPONSE:
-# I did not use generative AI or a coding-assistant for this assignemnt as well as any online resources outside of allowed resources (particularly for the , _ statement since I realized I only really needed the value from each time I recursively ran through the function). I checked my answer using the autograder (autograder.py -q q2) for question 2 as well as lecture notes on minimax which were very fruitful for figuring out the intial values for the min and max agents (sometimes I get them mixed up). For this function, I leveraged the evaluation function from question 1 so when the robot was done with its moves so it can be scored accordingly. As for how this process works, in essence you have the robot use the max agent while the rest use the min agent, which means we assume that the hazards will choose worse than the robot. 
+# I did not use generative AI, online or posted solutions, AI tools, or a coding-assistant for this assignemnt as well as any online resources outside of allowed resources (particularly for the , _ statement since I realized I only really needed the value from each time I recursively ran through the function). I checked my answer using the autograder (autograder.py -q q2) for question 2 as well as lecture notes on minimax which were very fruitful for figuring out the intial values for the min and max agents (sometimes I get them mixed up). For this function, I leveraged the evaluation function from question 1 so when the robot was done with its moves so it can be scored accordingly. As for how this process works, in essence you have the robot use the max agent while the rest use the min agent, which means we assume that the hazards will choose worse than the robot. 
 # === END Q2 SELF-REFLECTION ===
 
 class MinimaxAgent(MultiAgentSearchAgent):
@@ -182,7 +182,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
 # Include one sentence explaining the Q3 alpha-beta concept in your own words.
 #
 # YOUR RESPONSE:
-# I did not use GenAI, AI tools, coding assistants, posted solutions, or online resources that solve this problem. I checked my answer using the course materials, specifically the lecture slides on aplha-beta pruning. The pseduo-code provided in the slides was extremely helpful for implementing Q3, especially in thinking about the parameters needed for the alphabeta function. For this question, I followed the code structure from the minimax agent, but just extended it so the remianing leaves of a node would be skipped when beta becomes less than or equal to alpha.
+# I did not use GenAI, online or posted solutions, AI tools,  or any coding assistants to solve this problem. I checked my answer using the course materials, specifically the lecture slides on aplha-beta pruning. The pseduo-code provided in the slides was extremely helpful for implementing Q3, especially in thinking about the parameters needed for the alphabeta function. For this question, I followed the code structure from MinimaxAgent, but just extended it so the remianing leaves of a node would be skipped when beta becomes less than or equal to alpha.
 # === END Q3 SELF-REFLECTION ===
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
