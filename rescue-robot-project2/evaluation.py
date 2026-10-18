@@ -22,7 +22,7 @@ def score_evaluation_function(current_game_state):
 # Include one sentence explaining the Q5 evaluation-function concept in your own words.
 #
 # YOUR RESPONSE:
-# Write your response here.
+# I did not use any GenAI, coding assistants, online resources, posted solutions, or AI tools in answering this question. We checked our work to this question by running autograder.py -q q5, and tried to get as much passing as possible. In this question, we had to account for lots of things, like hazard_distance and calculating survivor_positions using Manhattan Distance, which we talked about in class. The lecture notes were helpful in refreshing myself on how Manhattan Distance works. In general, for this question, the evaluate function scores states by rewarding survivor rescues, penalizing Manhattan distance to the nearest target and applying penalites to avoid hazards.
 # === END Q5 SELF-REFLECTION ===
 
 def better_evaluation_function(current_game_state):
